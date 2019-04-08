@@ -32,11 +32,13 @@ function getRepoContributors(repoOwner, repoName, cb) {
        .pipe(fs.createWriteStream(filePath)); 
   }
 
-// getRepoContributors("jquery", "jquery", function(err, result) {
-//     for (i = 0; i < result.length; i++) {
-//         console.log(result[i].avatar_url);
-//     }
-//     console.log("Errors:", err);
-//  });
+getRepoContributors("jquery", "jquery", function(err, result) {
+    for (i = 0; i < result.length; i++) {
+        var urlLinks = result[i].avatar_url;
+        var loginNames = "./photos/" + result[i].login + ".jpg";
+        downloadImageByURL(urlLinks, loginNames)
+    }
+    console.log("Errors:", err);
+ });
 
- downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "./photos/kvirani.jpg")
+ //downloadImageByURL(getRepoContributors, "./photos/kvirani.jpg")
