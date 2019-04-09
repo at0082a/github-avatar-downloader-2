@@ -2,6 +2,9 @@ var request = require('request');
 var getSecrets = require('./secrets');
 var fs = require('fs');
 
+var args = process.argv.slice(2);
+var owner = args[0]; //gibson042
+var repo = args[1]; //
 
 function getRepoContributors(repoOwner, repoName, cb) {
     var options = {
@@ -32,13 +35,16 @@ function getRepoContributors(repoOwner, repoName, cb) {
        .pipe(fs.createWriteStream(filePath)); 
   }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(owner, repo, function(err, result) {
+    if (owner !== undefined && repo !== undefined) {
     for (i = 0; i < result.length; i++) {
         var urlLinks = result[i].avatar_url;
         var loginNames = "./photos/" + result[i].login + ".jpg";
         downloadImageByURL(urlLinks, loginNames)
     }
-    console.log("Errors:", err);
+} else {
+     console.log("Error: Please input a value into both owner and repo");
+    }
  });
 
  //downloadImageByURL(getRepoContributors, "./photos/kvirani.jpg")
